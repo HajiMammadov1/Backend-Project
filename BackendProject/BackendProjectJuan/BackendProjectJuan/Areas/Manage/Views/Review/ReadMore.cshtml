@@ -1,0 +1,39 @@
+﻿@model ProductComment
+@{
+    ViewData["Title"] = "ReadMore";
+    int counter = 0;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 mx-auto" style="margin-top: 100px;">
+            <h1>Review</h1>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                       
+                        
+                            <div class="col-6">
+                                <h5 class="card-title">ProductName: @Model.Product.Name</h5>
+                                <h5 class="card-title">UserName: @Model.AppUser.UserName</h5>
+                                <h5 class="card-title">Date: @Model.CreatedAt</h5>
+                                <h5 class="card-title">Rate: @Model.Rate</h5>
+                                <h5 class="card-title">Comment: @Model.Text</h5>
+                            </div>
+                            <form asp-action="delete" method="post" class="d-inline-block">
+                                <input type="hidden" value="@Model.Id" name="Id" />
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+
+                        
+
+                    </div>
+                    
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

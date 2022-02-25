@@ -1,0 +1,47 @@
+﻿@model Order
+<div class="billing-form-wrap">
+    <form id="order-form" asp-action="create" method="post">
+        <div class="row">
+            <div class="single-input-item col-12 ">
+                <label asp-for="FullName">First Name*</label>
+                <input asp-for="FullName" type="text" placeholder="Full Name">
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="single-input-item col-12 ">
+                <label asp-for="PhoneNumber">PhoneNumber*</label>
+                <input asp-for="PhoneNumber" type="text" placeholder="PhoneNumber">
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="single-input-item col-12">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" placeholder="Email">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="single-input-item col-12">
+                <label asp-for="Country">Country*</label>
+                <input asp-for="Country" type="text" placeholder="Country">
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+            <div class="single-input-item col-12">
+                <label asp-for="City">City*</label>
+                <input asp-for="City" type="text" placeholder="City">
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="single-input-item col-12">
+                <label asp-for="Address">Address*</label>
+                <input asp-for="Address" type="text" placeholder="Address">
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="single-input-item col-12">
+                <div class="order-note-block mt--30">
+                    <label asp-for="Note">Order notes</label>
+                    <textarea asp-for="Note" cols="30" rows="10" class="order-note"
+                              placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                    <span asp-validation-for="Note" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

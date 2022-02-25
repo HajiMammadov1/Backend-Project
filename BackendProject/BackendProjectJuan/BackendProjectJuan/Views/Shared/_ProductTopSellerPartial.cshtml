@@ -1,0 +1,51 @@
+﻿@model List<Product>
+<div class="top-seller-carousel slick-row-15 mtn-30">
+    <!-- product item start -->
+    @foreach (var item in Model)
+    {
+        <div class="slide-item">
+            <div class="pro-item-small mt-30">
+                <div class="product-thumb">
+                    <a asp-action="detail" asp-controller="product" asp-route-id="@item.Id">
+                        <img src="~/uploads/products/@item.ProductImages.FirstOrDefault(x => x.PosterStatus == true)?.Image" alt="">
+                    </a>
+                </div>
+                <div class="pro-small-content">
+                    <h6 class="product-name">
+                        <a asp-action="detail" asp-controller="product" asp-route-id="@item.Id">@item.Name</a>
+                    </h6>
+                    <div class="price-box">
+                        @if (item.DiscountPercent > 0)
+                        {
+                            <span class="price-regular">$@((item.SalePrice * (1 - item.DiscountPercent / 100)).ToString("0.00"))</span>
+                            <span class="price-old"><del>$@item.SalePrice</del></span>
+                        }
+                        else
+                        {
+                            <span class="price-regular">$@item.SalePrice</span>
+                        }
+                    </div>
+                    <div class="ratings">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            if (item.Rate >= i)
+                            {
+                                <span><i class="ion-android-star"></i></span>
+                            }
+                        }
+
+                    </div>
+                    <div class="product-link-2">
+                        <a href="#" data-toggle="tooltip" title="Wishlist"><i class="ion-android-favorite-outline"></i></a>
+                        <a asp-controller="product" asp-action="addbasket" asp-route-id="@item.Id" data-toggle="tooltip" title="Add To Cart" class="addToBasket"><i class="ion-bag"></i></a>
+                        <a asp-action="getproduct" asp-controller="product" asp-route-id="@item.Id" id="open-modal" data-toggle="modal" data-target="#quick_view">
+                            <span data-toggle="tooltip"
+                                  title="Quick View"><i class="ion-ios-eye-outline"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <!-- product item end -->
+</div>

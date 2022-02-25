@@ -1,0 +1,104 @@
+﻿@model PaginatedList<Feature>
+@{
+    ViewData["Title"] = "Index";
+    int counter = (Model.PageIndex - 1) * Model.PageSize;
+    var pageIndex = Model.PageIndex;
+    var previousPage = Model.PageIndex - 1;
+    var nextPage = Model.PageIndex + 1;
+    var totalPage = Model.TotalPages;
+
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 d-flex justify-content-between mb-3" style="margin-top: 100px;">
+            <h3>Feature</h3>
+            @*<form asp-action="index" method="get" class="d-flex">
+                    <div class="form-group">
+                        <label for="isDeleted">Delete status</label>
+                        <select id="isDeleted" class="form-control" name="isDeleted">
+                            <option value="" selected>All</option>
+                            @if (isDeleted == true)
+                            {
+                                <option value="true" selected>True</option>
+                            }
+                            else
+                            {
+                                <option value="true">True</option>
+                            }
+
+                            @if (isDeleted == false)
+                            {
+                                <option value="false" selected>False</option>
+                            }
+                            else
+                            {
+                                <option value="false">False</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </form>*@
+            <a asp-action="create" asp-controller="feature" class="btn btn-primary">Create</a>
+        </div>
+        <div class="col-lg-12">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        counter++;
+
+                        <tr class="authorRow">
+                            <th scope="row">@counter</th>
+                            <td>@item.Title</td>
+                            <td>@item.Desc</td>
+                            <td>
+                                <img width="100" src="~/uploads/features/@item.Icon" />
+                            </td>
+                            <td>
+                                <a asp-action="edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                            </td>
+                            <td>
+                                <a asp-action="delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+
+
+                    @if (pageIndex > 1)
+                    {
+                        <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="1">@("|<")</a></li>
+                        <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@previousPage">Previous</a></li>
+
+                    }
+                    @for (int i = 1; i <= totalPage; i++)
+                    {
+                        <li class="page-item @(i == pageIndex? "active":"")"><a class="page-link" asp-action="index" asp-route-page="@i">@i</a></li>
+                    }
+
+                    @if (pageIndex < totalPage)
+                    {
+                        <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@nextPage">Next</a></li>
+                        <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@totalPage">@(">|")</a></li>
+                    }
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

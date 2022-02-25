@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewData["Title"] = "Error";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link href="~/ErrorAssets/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <section class="notFound">
+        <div class="img">
+            <img src="~/ErrorAssets/Images/backToTheHomepage.webp" alt="Back to the Homepage" />
+            <img src="~/ErrorAssets//Images/Delorean.webp" alt="El Delorean, El Doc y Marti McFly" />
+        </div>
+        <div class="text">
+            <h1>404</h1>
+            <h2>@TempData["Error"]</h2>
+            <h3>BACK TO HOME?</h3>
+            <a asp-controller="setting" asp-action="index" class="yes">YES</a>
+            <a href="https://www.youtube.com/watch?v=G3AfIvJBcGo">NO</a>
+        </div>
+    </section>
+
+</body>
+
+</html>
+

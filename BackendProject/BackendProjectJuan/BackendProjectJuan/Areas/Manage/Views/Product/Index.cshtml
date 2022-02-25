@@ -1,0 +1,131 @@
+﻿@model PaginatedList<Product>
+@{
+    ViewData["Title"] = "Index";
+
+    int counter = (Model.PageIndex - 1) * 6;
+    var pageIndex = Model.PageIndex;
+    var previousPage = Model.PageIndex - 1;
+    var nextPage = Model.PageIndex + 1;
+    var totalPage = Model.TotalPages;
+    var isDeleted = ViewBag.IsDeleted;
+
+
+
+}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 d-flex justify-content-between mb-3" style="margin-top: 100px;">
+            <h3>Products</h3>
+            <form asp-action="index" method="get" class="d-flex">
+                <div class="form-group">
+                    <label for="isDeleted">Delete status</label>
+                    <select id="isDeleted" class="form-control" name="isDeleted">
+                        <option value="" selected>All</option>
+                        @if (isDeleted == true)
+                        {
+                            <option value="true" selected>True</option>
+                        }
+                        else
+                        {
+                            <option value="true">True</option>
+                        }
+
+                        @if (isDeleted == false)
+                        {
+                            <option value="false" selected>False</option>
+                        }
+                        else
+                        {
+                            <option value="false">False</option>
+                        }
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </form>
+            <a asp-action="create" class="btn btn-primary">Create</a>
+        </div>
+        <div class="col-lg-12">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Brand</th>
+                        <th scope="col">Category</th>
+                        @*<th scope="col">Colors</th>*@
+                        <th scope="col">Description</th>
+                        <th scope="col">CostPrice</th>
+                        <th scope="col">SalePrice</th>
+                        <th scope="col">Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        counter++;
+
+                    <tr>
+                        <th scope="row">@counter</th>
+                        <td>@item.Name</td>
+                        <td>@item.Brand.Name</td>
+                        <td>@item.Category.Name</td>
+                        @*<td>@item.ProductColors.FirstOrDefault(x => x.ColorId == item.Id).Color.Name</td>*@
+                        <td>@item.Desc</td>
+                        <td>@item.CostPrice</td>
+                        <td>@item.SalePrice</td>
+                        <td>
+                            <img width="100" src="~/uploads/products/@item.ProductImages.FirstOrDefault(x => x.PosterStatus == true)?.Image" />
+                        </td>
+                        <td>
+                            <a asp-action="edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                        </td>
+                        <td>
+                            <a asp-action="@(item.IsDeleted? "restore":"delete")" asp-route-id="@item.Id" class="btn btn-@(item.IsDeleted? "info":"danger") deleteAuthor">@(item.IsDeleted? "Restore":"Delete")</a>
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+
+
+                    @if (pageIndex > 1)
+                    {
+                        <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="1" asp-route-isDeleted="@isDeleted">@("|<")</a></li>
+                        <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@previousPage" asp-route-isDeleted="@isDeleted">Previous</a></li>
+
+                    }
+                    @for (int i = 1; i <= totalPage; i++)
+                    {
+
+                        //if (i >= pageIndex - 3 && i <= pageIndex + 3)
+                        //{
+                        //    i = pageIndex;
+
+
+                        //}
+
+                        <li class="page-item @(i == pageIndex? "active":"")"><a class="page-link" asp-action="index" asp-route-page="@i" asp-route-isDeleted="@isDeleted">@i</a></li>
+
+                    }
+
+                    @if (pageIndex < totalPage)
+                    {
+                        <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@nextPage" asp-route-isDeleted="@isDeleted">Next</a></li>
+                        <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@totalPage" asp-route-isDeleted="@isDeleted">@(">|")</a></li>
+                    }
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+
